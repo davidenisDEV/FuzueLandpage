@@ -12,14 +12,9 @@
     <style>
         body {
             font-family: 'Engebrechtre', serif;
-            background-color: #084a9a; /* Cor de fallback caso a imagem não carregue */
+            background-color: #084a9a; /* Cor de fallback global */
             color: #fdebdf;
             scroll-behavior: smooth;
-            /* Wallpaper global aplicado via JavaScript */
-            background-size: cover;
-            background-position: center center;
-            background-repeat: no-repeat;
-            background-attachment: fixed; /* Efeito parallax */
         }
 
         /* Cores secundárias */
@@ -69,12 +64,7 @@
             background-color: #a71c1b;
             color: #ffffff;
         }
-
-        .hero-bg {
-             /* Azul Fuzuê com 70% opacidade para permitir que o wallpaper do body apareça por baixo */
-            background-color: rgba(8, 74, 154, 0.70);
-            padding-top: 100px;
-        }
+        
         .home-logo {
             max-width: 300px;
             height: auto;
@@ -128,7 +118,7 @@
         .btn-secondary:active { background-color: #1e1e1e; }
 
         .dj-card {
-            background-color: rgba(58, 58, 58, 0.3);
+            background-color: rgba(58, 58, 58, 0.7); 
             border: 1px solid #3a3a3a;
             transition: transform 0.3s ease, box-shadow 0.3s ease;
             color: #fdebdf;
@@ -171,8 +161,8 @@
 
         .carousel-container {
             position: relative;
-            max-width: 900px; /* Aumentado para maior largura */
-            height: 600px; /* Aumentado para maior altura */
+            max-width: 900px; 
+            height: 600px; 
             margin: 2rem auto;
             overflow: hidden;
             border-radius: 0.5rem;
@@ -288,16 +278,39 @@
             text-shadow: 1px 1px 3px rgba(0,0,0,0.8); 
         }
 
-        #home, #sobre, #lineup, #reservas-section, #local, #agenda, #contato, #faq {
-            padding-top: 7rem; padding-bottom: 4rem;
+        /* Estilos base para seções com wallpaper dedicado */
+        #home, #sobre, #lineup, #reservas-section, #local, #agenda, #faq, #contato {
+            padding-top: 7rem; padding-bottom: 4rem; 
+            background-size: cover;
+            background-position: center center;
+            background-repeat: no-repeat;
+            position: relative; /* Para o overlay */
         }
+        /* Overlay para seções com wallpaper dedicado */
+        #home::before, #sobre::before, #lineup::before, #reservas-section::before, #local::before, #agenda::before, #faq::before, #contato::before {
+            content: "";
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            z-index: 1; /* Abaixo do conteúdo da seção */
+        }
+        /* Conteúdo da seção sobre o overlay */
+        #home > div, #sobre > div, #lineup > .container, #reservas-section > .container, 
+        #local > .container, #agenda > .container, #faq > .container, #contato > .container {
+            position: relative;
+            z-index: 2;
+        }
+
+        /* Overlays específicos para cada seção */
+        #home::before { background-color: rgba(8, 74, 154, 0.70); } 
+        #sobre::before { background-color: rgba(8, 74, 154, 0.85); } 
+        #agenda::before { background-color: rgba(8, 74, 154, 0.80); } 
+        #local::before { background-color: rgba(8, 74, 154, 0.85); } 
+        #faq::before { background-color: rgba(8, 74, 154, 0.85); } 
         
-        #sobre, #agenda, #local, #faq {
-            background-color: rgba(8, 74, 154, 0.80); 
-        }
-        #lineup { background-color: rgba(0,0,0,0.3); } 
-        #reservas-section { background-color: rgba(0,0,0,0.5); } 
-        #contato { background-color: rgba(0,0,0,0.2); } 
+        #lineup::before { background-color: rgba(0, 0, 0, 0.70); } 
+        #reservas-section::before { background-color: rgba(0, 0, 0, 0.75); } 
+        #contato::before { background-color: rgba(0, 0, 0, 0.65); } 
+
 
         #local .map-container { margin-bottom: 3rem; }
         #local .map-container:last-child { margin-bottom: 0; }
@@ -329,7 +342,7 @@
         </div>
     </header>
 
-    <section id="home" class="hero-bg min-h-screen flex flex-col items-center justify-center text-center p-6">
+    <section id="home" class="min-h-screen flex flex-col items-center justify-center text-center p-6">
         <div class="scroll-animate">
             <img id="homeFuzueLogo" src="https://placehold.co/300x100/084a9a/fdebdf?text=FUZUÊ+BAR&font=engebrechtre" alt="[Logo Principal Fuzuê Bar]" class="home-logo mx-auto">
             <p class="text-xl md:text-2xl text-fdebdf mb-4">Bar & Comidinhas!</p>
@@ -341,7 +354,7 @@
         </div>
     </section>
 
-    <section id="sobre" class="py-20 px-6">
+    <section id="sobre">
         <div class="container mx-auto max-w-4xl text-center">
             <div class="scroll-animate">
                 <h2 class="text-4xl mb-10 section-title">SOBRE O BAR</h2>
@@ -361,11 +374,6 @@
                     <div class="carousel-slide">
                         <img id="galleryImage3" src="https://placehold.co/800x600/3a3a3a/fdebdf?text=Carregando+Foto+3...&font=engebrechtre" alt="[Imagem da promoção de Quarta-feira]" onclick="openImageModal(this.src)">
                     </div>
-                    <!-- Exemplo de novo slide:
-                    <div class="carousel-slide">
-                        <img src="URL_DA_SUA_NOVA_IMAGEM_AQUI" alt="[Descrição da Nova Imagem]" onclick="openImageModal(this.src)">
-                    </div>
-                    -->
                     <div class="carousel-nav-buttons">
                         <button class="carousel-prev" onclick="changeSlide(-1); resetCarouselInterval();">❮ ANTERIOR</button>
                         <button class="carousel-next" onclick="changeSlide(1); resetCarouselInterval();">PRÓXIMO ❯</button>
@@ -380,7 +388,7 @@
         <img class="image-modal-content" id="modalImage" alt="[Imagem Ampliada]">
     </div>
 
-    <section id="agenda" class="py-20 px-6">
+    <section id="agenda">
         <div class="container mx-auto">
             <h2 class="text-4xl text-center mb-16 section-title scroll-animate">AGENDA DE EVENTOS</h2>
             <div id="eventos-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -407,8 +415,8 @@
         </div>
     </section>
 
-    <section id="lineup" class="py-20 px-6">
-        <div class="container mx-auto">
+    <section id="lineup"> 
+        <div class="container mx-auto"> 
             <h2 class="text-4xl font-bold text-center mb-16 section-title scroll-animate">NOSSOS DJs RESIDENTES</h2>
             <div id="djs-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
                 <div class="dj-card rounded-xl overflow-hidden p-6 text-center scroll-animate">
@@ -448,8 +456,8 @@
         </div>
     </section>
 
-    <section id="reservas-section" class="py-20 px-6">
-        <div class="container mx-auto">
+    <section id="reservas-section"> 
+        <div class="container mx-auto"> 
             <h2 class="text-4xl font-bold text-center mb-16 section-title scroll-animate">RESERVE SUA MESA OU ENTRADA</h2>
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-7xl mx-auto">
                 <div class="bg-accent-red p-8 rounded-xl shadow-2xl transform hover:scale-105 transition-transform duration-300 scroll-animate">
@@ -548,7 +556,7 @@
         </div>
     </div>
 
-    <section id="local" class="py-20 px-6 text-center">
+    <section id="local">
         <div class="container mx-auto scroll-animate">
             <h2 class="text-4xl mb-16 section-title">NOSSA LOCALIZAÇÃO</h2>
             <div class="grid md:grid-cols-2 gap-12 items-start">
@@ -578,8 +586,8 @@
         </div>
     </section>
 
-    <section id="contato" class="py-20 px-6">
-        <div class="container mx-auto text-center">
+    <section id="contato"> 
+        <div class="container mx-auto text-center"> 
             <h2 class="text-4xl mb-12 section-title scroll-animate">ENTRE EM CONTATO</h2>
             <div class="flex flex-wrap justify-center gap-4 md:gap-6 scroll-animate">
                 <a href="https://instagram.com/fuzue.bar" target="_blank" class="contact-link">
@@ -601,7 +609,7 @@
         </div>
     </section>
 
-    <section id="faq" class="py-20 px-6">
+    <section id="faq">
         <div class="container mx-auto max-w-3xl">
             <h2 class="text-4xl text-center mb-12 section-title scroll-animate">DÚVIDAS FREQUENTES</h2>
             <div class="space-y-4 scroll-animate">
@@ -654,7 +662,9 @@
         </div>
     </section>
 
-    <footer class="py-10 text-center"> <div class="footer-content"> <p>© <span id="currentYear"></span> Fuzuê Bar. Todos os direitos reservados.</p>
+    <footer class="py-10 text-center"> 
+        <div class="footer-content"> 
+            <p>© <span id="currentYear"></span> Fuzuê Bar. Todos os direitos reservados.</p>
             <p class="text-sm mt-1">Organização: Trippy Co.</p>
         </div>
     </footer>
@@ -665,16 +675,13 @@
         import { getFirestore, collection, addDoc, serverTimestamp, setLogLevel } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
         import { getAuth, signInAnonymously, signInWithCustomToken } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
 
-        // Tenta carregar configurações do ambiente do Canvas
         const firebaseConfigFromGlobal = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : null;
         const initialAuthTokenFromGlobal = typeof __initial_auth_token !== 'undefined' ? __initial_auth_token : null;
         
-        // Usa configurações do config.js se as globais do Canvas não estiverem disponíveis
-        // ou se window.firebaseConfigFallback estiver definido (indicando que config.js carregou)
         const finalFirebaseConfig = firebaseConfigFromGlobal || window.firebaseConfigFallback;
-        const GOOGLE_APPS_SCRIPT_URL = typeof window.GOOGLE_APPS_SCRIPT_URL_CONFIG !== 'undefined' ? window.GOOGLE_APPS_SCRIPT_URL_CONFIG : 'https://script.google.com/macros/s/AKfycbw_R3gZ253qL3Fef53FNYE7ss2P_6hA5q1r2s2Uu_xYc39L8yB9l_2Xn4v8gK2jN9zQ/exec'; // URL real adicionada
-        const appIdFromGlobal = typeof __app_id !== 'undefined' ? __app_id : (typeof window.DEFAULT_APP_ID_CONFIG !== 'undefined' ? window.DEFAULT_APP_ID_CONFIG : 'default-fuzuebar-app-v12-configfile');
-        const adminWhatsAppNumber = typeof window.ADMIN_WHATSAPP_NUMBER_CONFIG !== 'undefined' ? window.ADMIN_WHATSAPP_NUMBER_CONFIG : "5500000000000"; // Fallback seguro
+        const GOOGLE_APPS_SCRIPT_URL = typeof window.GOOGLE_APPS_SCRIPT_URL_CONFIG !== 'undefined' ? window.GOOGLE_APPS_SCRIPT_URL_CONFIG : 'https://script.google.com/macros/s/AKfycbw_R3gZ253qL3Fef53FNYE7ss2P_6hA5q1r2s2Uu_xYc39L8yB9l_2Xn4v8gK2jN9zQ/exec'; 
+        const appIdFromGlobal = typeof __app_id !== 'undefined' ? __app_id : (typeof window.DEFAULT_APP_ID_CONFIG !== 'undefined' ? window.DEFAULT_APP_ID_CONFIG : 'default-fuzuebar-app-v13-section-wallpapers');
+        const adminWhatsAppNumber = typeof window.ADMIN_WHATSAPP_NUMBER_CONFIG !== 'undefined' ? window.ADMIN_WHATSAPP_NUMBER_CONFIG : "5500000000000"; 
 
         if (!finalFirebaseConfig) {
             console.error("Configuração do Firebase não encontrada. Verifique config.js ou as variáveis globais do ambiente.");
@@ -692,8 +699,25 @@
         const gardenLogoUrl = `${storageBucketBaseUrl}${encodeURIComponent(gardenLogoPath)}?alt=media`;
         const cardapioFilePath = "Cardapio.pdf"; 
         const cardapioPdfUrl = `${storageBucketBaseUrl}${encodeURIComponent(cardapioFilePath)}?alt=media`;
-        const wallpaperFileName = "canva_fuz (2).png"; // Atualizado conforme solicitado
-        const wallpaperUrl = `${storageBucketBaseUrl}${encodeURIComponent(wallpaperFileName)}?alt=media`;
+        
+        // Wallpapers de Seção
+        const heroWallpaperFileName = "home.png";
+        const heroWallpaperUrl = `${storageBucketBaseUrl}${encodeURIComponent(heroWallpaperFileName)}?alt=media`;
+        const sobreGaleriaWallpaperFileName = "galeriasobre.png";
+        const sobreGaleriaWallpaperUrl = `${storageBucketBaseUrl}${encodeURIComponent(sobreGaleriaWallpaperFileName)}?alt=media`;
+        const lineupWallpaperFileName = "dj lineup.png"; 
+        const lineupWallpaperUrl = `${storageBucketBaseUrl}${encodeURIComponent(lineupWallpaperFileName)}?alt=media`;
+        const reservasWallpaperFileName = "reserva_mesa.png";
+        const reservasWallpaperUrl = `${storageBucketBaseUrl}${encodeURIComponent(reservasWallpaperFileName)}?alt=media`;
+        const localizacaoWallpaperFileName = "localização.png";
+        const localizacaoWallpaperUrl = `${storageBucketBaseUrl}${encodeURIComponent(localizacaoWallpaperFileName)}?alt=media`;
+        const contatoWallpaperFileName = "contato_background.png";
+        const contatoWallpaperUrl = `${storageBucketBaseUrl}${encodeURIComponent(contatoWallpaperFileName)}?alt=media`;
+        const faqWallpaperFileName = "duvidas_freqs.png";
+        const faqWallpaperUrl = `${storageBucketBaseUrl}${encodeURIComponent(faqWallpaperFileName)}?alt=media`;
+        const agendaWallpaperFileName = "agenda_wallpaper.png"; // Novo wallpaper da agenda
+        const agendaWallpaperUrl = `${storageBucketBaseUrl}${encodeURIComponent(agendaWallpaperFileName)}?alt=media`;
+        
         const footerImageFileName = "footer - fuzue.png";
         const footerImageUrl = `${storageBucketBaseUrl}${encodeURIComponent(footerImageFileName)}?alt=media`;
         const galleryImg1Path = "baby devil fuz.jpg";
@@ -703,25 +727,43 @@
         const galleryImg3Path = "promo quarta fuz.jpg";
         const galleryImg3Url = `${storageBucketBaseUrl}${encodeURIComponent(galleryImg3Path)}?alt=media`;
 
-        // Novas URLs para imagens dos DJs
         const djEveronImagePath = "foto_everon.jpg";
         const djEveronImageUrl = `${storageBucketBaseUrl}${encodeURIComponent(djEveronImagePath)}?alt=media`;
         const djDefariasImagePath = "defarias.jpg";
         const djDefariasImageUrl = `${storageBucketBaseUrl}${encodeURIComponent(djDefariasImagePath)}?alt=media`;
         const djRafiuskImagePath = "rafiusk.jpg";
         const djRafiuskImageUrl = `${storageBucketBaseUrl}${encodeURIComponent(djRafiuskImagePath)}?alt=media`;
-
-
+        
         document.addEventListener('DOMContentLoaded', () => {
-            document.body.style.backgroundImage = `url('${wallpaperUrl}')`; 
+            // Aplica wallpapers específicos para cada seção
+            const homeSectionEl = document.getElementById('home');
+            if (homeSectionEl) homeSectionEl.style.backgroundImage = `url('${heroWallpaperUrl}')`;
+            
+            const sobreSectionEl = document.getElementById('sobre');
+            if (sobreSectionEl) sobreSectionEl.style.backgroundImage = `url('${sobreGaleriaWallpaperUrl}')`;
+            
+            const lineupSectionEl = document.getElementById('lineup');
+            if (lineupSectionEl) lineupSectionEl.style.backgroundImage = `url('${lineupWallpaperUrl}')`;
+
+            const reservasSectionEl = document.getElementById('reservas-section');
+            if (reservasSectionEl) reservasSectionEl.style.backgroundImage = `url('${reservasWallpaperUrl}')`;
+
+            const localSectionEl = document.getElementById('local');
+            if (localSectionEl) localSectionEl.style.backgroundImage = `url('${localizacaoWallpaperUrl}')`;
+            
+            const contatoSectionEl = document.getElementById('contato');
+            if (contatoSectionEl) contatoSectionEl.style.backgroundImage = `url('${contatoWallpaperUrl}')`;
+            
+            const faqSectionEl = document.getElementById('faq');
+            if (faqSectionEl) faqSectionEl.style.backgroundImage = `url('${faqWallpaperUrl}')`;
+
+            const agendaSectionEl = document.getElementById('agenda'); // Seleciona a seção da agenda
+            if (agendaSectionEl) agendaSectionEl.style.backgroundImage = `url('${agendaWallpaperUrl}')`; // Aplica o wallpaper da agenda
             
             const footerEl = document.querySelector('footer');
-            if (footerEl) {
-                footerEl.style.backgroundImage = `url('${footerImageUrl}')`;
-            } else {
-                console.warn("Elemento footer não encontrado para aplicar imagem de fundo.");
-            }
-
+            if (footerEl) footerEl.style.backgroundImage = `url('${footerImageUrl}')`;
+            
+            // Carrega outras imagens
             const headerFuzueLogoEl = document.getElementById('headerFuzueLogo');
             if (headerFuzueLogoEl) headerFuzueLogoEl.src = fuzueLogoUrl;
             const homeFuzueLogoEl = document.getElementById('homeFuzueLogo');
@@ -740,7 +782,6 @@
             const galleryImage3El = document.getElementById('galleryImage3');
             if (galleryImage3El) galleryImage3El.src = galleryImg3Url;
 
-            // Define as imagens dos DJs
             const djEveronImageEl = document.getElementById('djEveronImage');
             if (djEveronImageEl) djEveronImageEl.src = djEveronImageUrl;
             const djDefariasImageEl = document.getElementById('djDefariasImage');
@@ -773,10 +814,10 @@
             
             function startCarouselAutoPlayInternal() { 
                 if (slides.length > 0) {
-                    clearInterval(carouselInterval);
+                    clearInterval(carouselInterval); 
                     carouselInterval = setInterval(() => {
                         window.changeSlide(1); 
-                    }, 5000);
+                    }, 5000); 
                 }
             }
 
@@ -785,7 +826,7 @@
                 showSlidesInternal(); 
             };
 
-            window.resetCarouselInterval = () => {
+            window.resetCarouselInterval = () => { 
                 clearInterval(carouselInterval);
                 startCarouselAutoPlayInternal();
             };
@@ -1008,11 +1049,6 @@
             }
             audio.onended = () => { btnEl.innerHTML = playIconSVG; if (currentAudio === audio) { currentAudio = null; currentPlayButton = null; } };
         }
-
-        // Lógica do Carrossel de Imagens (movida para dentro de DOMContentLoaded)
-        // As variáveis slideIndex, slides, carouselPrevBtn, carouselNextBtn, carouselInterval
-        // e as funções showSlidesInternal, startCarouselAutoPlayInternal, window.changeSlide, window.resetCarouselInterval
-        // estão agora definidas dentro do listener DOMContentLoaded.
 
         const imageModal = document.getElementById("imageModal"), modalImg = document.getElementById("modalImage"), imgModalClose = document.querySelector(".image-modal-close");
         window.openImageModal = src => { if(imageModal && modalImg){ imageModal.style.display="block"; modalImg.src=src; document.body.style.overflow='hidden';}};
